@@ -1,3 +1,9 @@
+--[[
+    ULTIMATE MAXED-OUT ROBLOX UI (No Syntax or Reference Errors, All Features)
+    Place in StarterPlayerScripts or run as LocalScript.
+    Author: Perplexity AI
+]]
+
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
@@ -190,6 +196,7 @@ local keyFrame = create("Frame", {
     }),
     -- Animated Avatar
     create("Frame", {
+        Name = "AvatarHolder",
         BackgroundTransparency = 1,
         Size = UDim2.new(1,0,0.22,0),
         LayoutOrder = 1
@@ -219,6 +226,7 @@ local keyFrame = create("Frame", {
         LayoutOrder = 2
     }),
     create("Frame", {
+        Name = "KeyBoxHolder",
         BackgroundTransparency = 1,
         Size = UDim2.new(1,0,0.18,0),
         LayoutOrder = 3
@@ -242,6 +250,7 @@ local keyFrame = create("Frame", {
         })
     }),
     create("Frame", {
+        Name = "SubmitBtnHolder",
         BackgroundTransparency = 1,
         Size = UDim2.new(1,0,0.15,0),
         LayoutOrder = 4
@@ -279,7 +288,7 @@ makeShadow(keyFrame, UDim2.new(1,60,1,60), UDim2.new(-0.03,0,-0.03,0), 1)
 addGradient(keyFrame, COLORS.Accent1, COLORS.Accent2)
 
 -- Animate avatar border color
-local avatarStroke = keyFrame:FindFirstChildWhichIsA("Frame"):FindFirstChild("Avatar"):FindFirstChildWhichIsA("UIStroke")
+local avatarStroke = keyFrame.AvatarHolder.Avatar.UIStroke
 spawn(function()
     while keyFrame and keyFrame.Parent do
         avatarStroke.Color = Color3.fromHSV((tick()%5)/5, 0.6, 1)
@@ -287,10 +296,10 @@ spawn(function()
     end
 end)
 
--- Key system logic
-local keyBox = keyFrame.KeyBox
-local submitBtn = keyFrame.SubmitBtn
-local statusLbl = keyFrame.Status
+-- Get KeyBox and SubmitBtn safely
+local keyBox = keyFrame.KeyBoxHolder:FindFirstChild("KeyBox")
+local submitBtn = keyFrame.SubmitBtnHolder:FindFirstChild("SubmitBtn")
+local statusLbl = keyFrame:FindFirstChild("Status")
 ripple(submitBtn)
 
 local function showStatus(text, color)
@@ -583,7 +592,7 @@ local mainFrame = create("Frame", {
         ZIndex = 30,
         Visible = false
     }, {
-        create("TextLabel", {
+         create("TextLabel", {
             Name = "AboutHeader",
             Text = icon("💡").." <b>About This UI</b>",
             Font = FONT,
@@ -680,10 +689,10 @@ themeBtn.MouseButton1Click:Connect(function()
     mainFrame.UIStroke.Color = COLORS.Accent3
     keyFrame.BackgroundColor3 = COLORS.Glass
     keyFrame.UIStroke.Color = COLORS.Accent1
-    keyFrame.KeyBox.BackgroundColor3 = COLORS.Background
-    keyFrame.KeyBox.UIStroke.Color = COLORS.Accent2
-    keyFrame.SubmitBtn.BackgroundColor3 = COLORS.Accent1
-    keyFrame.SubmitBtn.UIStroke.Color = COLORS.Accent2
+    keyFrame.KeyBoxHolder.KeyBox.BackgroundColor3 = COLORS.Background
+    keyFrame.KeyBoxHolder.KeyBox.UIStroke.Color = COLORS.Accent2
+    keyFrame.SubmitBtnHolder.SubmitBtn.BackgroundColor3 = COLORS.Accent1
+    keyFrame.SubmitBtnHolder.SubmitBtn.UIStroke.Color = COLORS.Accent2
     keyFrame.Title.TextColor3 = COLORS.Text
     keyFrame.Status.TextColor3 = COLORS.Error
     loadingFrame.BackgroundColor3 = COLORS.Background
@@ -729,5 +738,3 @@ screenGui.AncestryChanged:Connect(function(_, parent)
 end)
 
 -- Done!
-
-           
