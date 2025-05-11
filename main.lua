@@ -41,9 +41,9 @@ local FONT = Enum.Font.Gotham
 local function getScale()
     local res = workspace.CurrentCamera and workspace.CurrentCamera.ViewportSize or Vector2.new(1920,1080)
     if res.X < 700 or UIS.TouchEnabled then
-        return 0.98, 0.52
+        return 0.98, 0.60
     else
-        return 0.44, 0.52
+        return 0.44, 0.54
     end
 end
 
@@ -180,8 +180,9 @@ local keyFrame = create("Frame", {
 }, {
     create("UICorner", {CornerRadius = UDim.new(0,28)}),
     create("UIStroke", {Color = COLORS.Accent1, Thickness = 2, Transparency = 0.22}),
+    create("UIPadding", {PaddingTop = UDim.new(0,16), PaddingBottom = UDim.new(0,16)}),
     create("UIListLayout", {
-        Padding = UDim.new(0,0),
+        Padding = UDim.new(0,12),
         FillDirection = Enum.FillDirection.Vertical,
         HorizontalAlignment = Enum.HorizontalAlignment.Center,
         VerticalAlignment = Enum.VerticalAlignment.Center,
@@ -206,21 +207,16 @@ local keyFrame = create("Frame", {
             create("UIStroke", {Color = COLORS.Accent2, Thickness = 2, Transparency = 0.1})
         })
     }),
-    create("Frame", {
+    create("TextLabel", {
+        Name = "Title",
+        Text = icon("🔒").." <b>Access Key Required</b>",
+        Font = FONT,
+        TextSize = 30,
+        TextColor3 = COLORS.Text,
         BackgroundTransparency = 1,
-        Size = UDim2.new(1,0,0.13,0),
+        Size = UDim2.new(1,0,0,36),
+        RichText = true,
         LayoutOrder = 2
-    }, {
-        create("TextLabel", {
-            Name = "Title",
-            Text = icon("🔒").." <b>Access Key Required</b>",
-            Font = FONT,
-            TextSize = 30,
-            TextColor3 = COLORS.Text,
-            BackgroundTransparency = 1,
-            Size = UDim2.new(1,0,1,0),
-            RichText = true
-        })
     }),
     create("Frame", {
         BackgroundTransparency = 1,
@@ -268,21 +264,15 @@ local keyFrame = create("Frame", {
             create("UIStroke", {Color = COLORS.Accent2, Thickness = 1, Transparency = 0.3})
         })
     }),
-    create("Frame", {
+    create("TextLabel", {
+        Name = "Status",
+        Text = "",
+        Font = FONT,
+        TextSize = 18,
+        TextColor3 = COLORS.Error,
         BackgroundTransparency = 1,
-        Size = UDim2.new(1,0,0.10,0),
+        Size = UDim2.new(1,0,0,24),
         LayoutOrder = 5
-    }, {
-        create("TextLabel", {
-            Name = "Status",
-            Text = "",
-            Font = FONT,
-            TextSize = 18,
-            TextColor3 = COLORS.Error,
-            BackgroundTransparency = 1,
-            Size = UDim2.new(1,0,1,0),
-            ZIndex = 3
-        })
     })
 })
 makeShadow(keyFrame, UDim2.new(1,60,1,60), UDim2.new(-0.03,0,-0.03,0), 1)
@@ -291,9 +281,7 @@ addGradient(keyFrame, COLORS.Accent1, COLORS.Accent2)
 -- Animate avatar border color
 local avatarStroke = keyFrame:FindFirstChildWhichIsA("Frame"):FindFirstChild("Avatar"):FindFirstChildWhichIsA("UIStroke")
 spawn(function()
-    local t = 0
     while keyFrame and keyFrame.Parent do
-        t = t + 0.03
         avatarStroke.Color = Color3.fromHSV((tick()%5)/5, 0.6, 1)
         wait(0.03)
     end
@@ -360,10 +348,9 @@ local loadingFrame = create("Frame", {
         RichText = true,
         ZIndex = 11
     }),
-    -- Animated loading icon
     create("ImageLabel", {
         Name = "Spinner",
-        Image = "rbxassetid://77339698", -- Roblox spinner asset
+        Image = "rbxassetid://77339698",
         BackgroundTransparency = 1,
         Size = UDim2.new(0,38,0,38),
         Position = UDim2.new(0.5,-19,0.48,0),
@@ -448,6 +435,7 @@ local mainFrame = create("Frame", {
 }, {
     create("UICorner", {CornerRadius = UDim.new(0,32)}),
     create("UIStroke", {Color = COLORS.Accent3, Thickness = 2, Transparency = 0.18}),
+    create("UIPadding", {PaddingTop = UDim.new(0,12), PaddingBottom = UDim.new(0,12), PaddingLeft = UDim.new(0,18), PaddingRight = UDim.new(0,18)}),
     create("Frame", {
         Name = "TabBar",
         BackgroundTransparency = 1,
@@ -586,7 +574,7 @@ local mainFrame = create("Frame", {
             create("UICorner", {CornerRadius = UDim.new(0,14)}),
             create("UIStroke", {Color = COLORS.Accent2, Thickness = 1, Transparency = 0.2})
         })
-        }),
+    }),
     create("Frame", {
         Name = "ContentAbout",
         BackgroundTransparency = 1,
@@ -738,4 +726,8 @@ screenGui.AncestryChanged:Connect(function(_, parent)
     if not parent then
         blur:Destroy()
     end
-  end)
+end)
+
+-- Done!
+
+           
